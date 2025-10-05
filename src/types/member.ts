@@ -1,4 +1,3 @@
-// 메이플 API 응답 타입 (snake_case)
 export type CharacterOcidResponse = {
   ocid: string;
 };
@@ -49,17 +48,34 @@ export type GuildBasicResponse = {
   guild_mark_custom: string;
 };
 
-// 내부 사용 타입
-export type GuildMember = {
+export type Member = {
+  id: string;
   ocid: string;
-  characterName: string;
-  worldName: string;
-  characterLevel: number;
-  characterClass: string;
-  characterGuildName: string;
+  character_name: string;
+  character_class: string;
+  character_level: number;
+  character_image: string | null;
+  world_name: string;
+  guild_name: string;
+  joined_at: string;
+  previous_guild: string | null;
+  position: string;
+  note: string | null;
+  created_at: string;
+  updated_at: string;
 };
 
-export type MemberWithStats = GuildMember & {
-  basic?: CharacterBasicResponse;
-  contribution?: number;
+export type CreateMemberInput = {
+  character_name: string;
+  joined_at: string;
+  previous_guild?: string;
+  position?: string;
+  note?: string;
+};
+
+export type UpdateMemberInput = {
+  joined_at?: string;
+  previous_guild?: string;
+  position?: string;
+  note?: string;
 };

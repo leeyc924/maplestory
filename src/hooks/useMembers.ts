@@ -1,28 +1,85 @@
-import { useEffect, useState } from "react";
-import type { MemberWithStats } from "@/types/member";
+import {
+  useMutation,
+  useQuery,
+  useQueryClient,
+  useSuspenseQuery,
+} from "@tanstack/react-query";
+import { apiClient } from "@/lib/http-client";
+import type {
+  CreateMemberInput,
+  Member,
+  UpdateMemberInput,
+} from "@/types/member";
+
+export async function fetchMembers(): Promise<Member[]> {
+  const data = await apiClient.get<{ members: Member[] }>("/api/members");
+  return data.members;
+}
+
+async function createMember(input: CreateMemberInput): Promise<Member> {
+  const data = await apiClient.post<{ member: Member }>("/api/members", input);
+  return data.member;
+}
+
+async function updateMemberApi(
+  id: string,
+  input: UpdateMemberInput,
+): Promise<Member> {
+  const data = await apiClient.put<{ member: Member }>("/api/members", {
+    id,
+    data: input,
+  });
+  return data.member;
+}
+
+async function deleteMemberApi(id: string): Promise<void> {
+  await apiClient.delete(`/api/members?id=${id}`);
+}
 
 export function useMembers() {
-  const [members, setMembers] = useState<MemberWithStats[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  return useQuery({
+    queryKey: ["members"],
+    queryFn: fetchMembers,
+  });
+}
 
-  useEffect(() => {
-    async function fetchMembers() {
-      try {
-        const response = await fetch("/api/members");
-        if (!response.ok) throw new Error("Failed to fetch");
+export function useMembersSuspense() {
+  return useSuspenseQuery({
+    queryKey: ["members"],
+    queryFn: fetchMembers,
+  });
+}
 
-        const data = await response.json();
-        setMembers(data.members);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : "Error");
-      } finally {
-        setLoading(false);
-      }
-    }
+export function useAddMember() {
+  const queryClient = useQueryClient();
 
-    fetchMembers();
-  }, []);
+  return useMutation({
+    mutationFn: createMember,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["members"] });
+    },
+  });
+}
 
-  return { members, loading, error };
+export function useUpdateMember() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({ id, data }: { id: string; data: UpdateMemberInput }) =>
+      updateMemberApi(id, data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["members"] });
+    },
+  });
+}
+
+export function useDeleteMember() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: deleteMemberApi,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["members"] });
+    },
+  });
 }

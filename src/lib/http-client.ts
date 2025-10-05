@@ -20,6 +20,14 @@ type ErrorResponse = {
   };
 };
 
+function getBaseURL(endpoint: string): string {
+  if (typeof window === "undefined") {
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+    return `${siteUrl}${endpoint}`;
+  }
+  return endpoint;
+}
+
 export function createHttpClient(config: HttpClientConfig) {
   const { baseURL, headers: defaultHeaders = {} } = config;
 
@@ -170,7 +178,6 @@ export function createHttpClient(config: HttpClientConfig) {
   };
 }
 
-// 메이플스토리 API 클라이언트
 function getMapleApiKey(): string {
   const key = process.env.MAPLE_API_KEY;
   if (!key) {
@@ -184,4 +191,11 @@ export const mapleClient = createHttpClient({
   headers: {
     "x-nxopen-api-key": getMapleApiKey(),
   },
+});
+
+export const apiClient = createHttpClient({
+  baseURL:
+    typeof window === "undefined"
+      ? process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"
+      : "",
 });

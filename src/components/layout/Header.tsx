@@ -63,14 +63,6 @@ function Header({ sidebarOpen, setSidebarOpen }: Props) {
               </span>
             </h1>
           </div>
-          <div
-            className={cn(
-              "text-white/80 text-xs md:text-sm",
-              "hidden sm:block",
-            )}
-          >
-            메이플스토리 길드 관리 시스템
-          </div>
         </div>
       </div>
     </header>

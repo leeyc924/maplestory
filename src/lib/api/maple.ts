@@ -1,41 +1,58 @@
-const BASE_URL = "https://open.api.nexon.com/maplestory/v1";
+import { mapleClient } from "@/lib/http-client";
+import type {
+  CharacterBasicResponse,
+  CharacterOcidResponse,
+  GuildBasicResponse,
+  GuildIdResponse,
+} from "@/types/member";
 
-function getApiKey(): string {
-  const key = process.env.MAPLE_API_KEY;
-  if (!key) {
-    throw new Error("MAPLE_API_KEY is not defined in environment variables");
-  }
-  return key;
+function getYesterday(): string {
+  const date = new Date();
+  date.setDate(date.getDate() - 1);
+  return date.toISOString().split("T")[0] || "";
 }
 
-const API_KEY = getApiKey();
+export async function getGuildId(
+  guildName: string,
+  worldName: string,
+): Promise<string | null> {
+  try {
+    const data = await mapleClient.get<GuildIdResponse>(
+      `/v1/guild/id?guild_name=${encodeURIComponent(guildName)}&world_name=${encodeURIComponent(worldName)}`,
+      { next: { revalidate: 3600 } },
+    );
+    return data.oguild_id;
+  } catch (error) {
+    console.error("Failed to get guild ID:", error);
+    return null;
+  }
+}
 
-type MapleApiError = {
-  error: {
-    name: string;
-    message: string;
-  };
-};
+export async function getGuildBasic(
+  oguildId: string,
+  date?: string,
+): Promise<GuildBasicResponse | null> {
+  try {
+    const queryDate = date || getYesterday();
+    const data = await mapleClient.get<GuildBasicResponse>(
+      `/v1/guild/basic?oguild_id=${oguildId}&date=${queryDate}`,
+      { next: { revalidate: 3600 } },
+    );
+    return data;
+  } catch (error) {
+    console.error("Failed to get guild basic:", error);
+    return null;
+  }
+}
 
 export async function getCharacterOcid(
   characterName: string,
 ): Promise<string | null> {
   try {
-    const url = `${BASE_URL}/id?character_name=${encodeURIComponent(characterName)}`;
-    const response = await fetch(url, {
-      headers: {
-        "x-nxopen-api-key": API_KEY,
-      },
-      next: { revalidate: 3600 },
-    });
-
-    if (!response.ok) {
-      const error: MapleApiError = await response.json();
-      console.error("Maple API Error:", error);
-      return null;
-    }
-
-    const data: { ocid: string } = await response.json();
+    const data = await mapleClient.get<CharacterOcidResponse>(
+      `/v1/id?character_name=${encodeURIComponent(characterName)}`,
+      { next: { revalidate: 3600 } },
+    );
     return data.ocid;
   } catch (error) {
     console.error("Failed to get character OCID:", error);
@@ -43,18 +60,14 @@ export async function getCharacterOcid(
   }
 }
 
-export async function getCharacterBasic(ocid: string) {
+export async function getCharacterBasic(
+  ocid: string,
+): Promise<CharacterBasicResponse | null> {
   try {
-    const response = await fetch(`${BASE_URL}/character/basic?ocid=${ocid}`, {
-      headers: {
-        "x-nxopen-api-key": API_KEY,
-      },
-      next: { revalidate: 3600 },
-    });
-
-    if (!response.ok) return null;
-
-    const data = await response.json();
+    const data = await mapleClient.get<CharacterBasicResponse>(
+      `/v1/character/basic?ocid=${ocid}`,
+      { next: { revalidate: 3600 } },
+    );
     return data;
   } catch (error) {
     console.error("Failed to get character basic:", error);
@@ -63,13 +76,25 @@ export async function getCharacterBasic(ocid: string) {
 }
 
 export async function getGuildMembers(
-  guildName: string,
-  worldName: string = "스카니아",
+  guildName: string = "이브",
+  worldName: string = "루나",
 ) {
-  const members = ["캐릭터명1", "캐릭터명2", "캐릭터명3"];
+  const guildId = await getGuildId(guildName, worldName);
+  if (!guildId) {
+    console.error("Guild not found");
+    return [];
+  }
+
+  const guildBasic = await getGuildBasic(guildId);
+  if (!guildBasic) {
+    console.error("Failed to get guild info");
+    return [];
+  }
+
+  const memberNames = guildBasic.guild_member;
 
   const memberData = await Promise.all(
-    members.map(async (name) => {
+    memberNames.map(async (name) => {
       const ocid = await getCharacterOcid(name);
       if (!ocid) return null;
 
@@ -80,9 +105,9 @@ export async function getGuildMembers(
         ocid,
         characterName: name,
         worldName,
-        characterLevel: basic.character_level as number,
-        characterClass: basic.character_class as string,
-        characterGuildName: basic.character_guild_name as string,
+        characterLevel: basic.character_level,
+        characterClass: basic.character_class,
+        characterGuildName: basic.character_guild_name,
         basic,
         contribution: Math.floor(Math.random() * 20000),
       };

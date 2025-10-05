@@ -64,9 +64,9 @@ export default function MembersPage() {
                   "mb-2 md:mb-3",
                 )}
               >
-                {member.basic?.characterImage ? (
+                {member.basic?.character_image ? (
                   <img
-                    src={member.basic.characterImage}
+                    src={member.basic.character_image}
                     alt={member.characterName}
                     className="w-10 h-10 md:w-12 md:h-12 rounded-full"
                   />

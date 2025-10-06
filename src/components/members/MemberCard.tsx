@@ -3,21 +3,21 @@
 import dayjs from "dayjs";
 import { Edit, Trash2 } from "lucide-react";
 import "dayjs/locale/ko";
+import type { GuildMember } from "@/types/member";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { cn } from "@/lib/utils";
-import type { Member } from "@/types/member";
 
 dayjs.extend(relativeTime);
 dayjs.locale("ko");
 
 type Props = {
-  member: Member;
-  onEdit: (member: Member) => void;
+  member: GuildMember;
+  onEdit: (member: GuildMember) => void;
   onDelete: (id: string) => void;
 };
 
 export default function MemberCard({ member, onEdit, onDelete }: Props) {
-  const firstChar = member.character_name.charAt(0) || "?";
+  const firstChar = member.characterName.charAt(0) || "?";
 
   return (
     <div
@@ -31,14 +31,14 @@ export default function MemberCard({ member, onEdit, onDelete }: Props) {
     >
       <div className="flex items-start justify-between mb-3">
         <div className="flex items-center gap-2 md:gap-3 flex-1 min-w-0">
-          {member.character_image ? (
+          {member.characterImage ? (
             <img
-              src={member.character_image}
-              alt={member.character_name}
+              alt={member.characterName}
               className={cn(
-                "w-10 h-10 md:w-12 md:h-12",
-                "rounded-full object-cover flex-shrink-0",
+                "w-20 h-20 md:w-24 md:h-24",
+                "rounded-full object-cover flex-shrink-0 scale-200",
               )}
+              src={member.characterImage}
             />
           ) : (
             <div
@@ -60,33 +60,33 @@ export default function MemberCard({ member, onEdit, onDelete }: Props) {
                 "text-sm md:text-base truncate",
               )}
             >
-              {member.character_name}
+              {member.characterName}
             </div>
             <div className="text-blue-200 text-xs md:text-sm">
-              Lv. {member.character_level}
+              Lv. {member.characterLevel}
             </div>
           </div>
         </div>
 
         <div className="flex gap-1 flex-shrink-0">
           <button
-            onClick={() => onEdit(member)}
             className={cn(
               "p-1.5 rounded-lg bg-blue-500/20",
               "hover:bg-blue-500/30 text-blue-300",
               "transition-colors",
             )}
+            onClick={() => onEdit(member)}
             type="button"
           >
             <Edit className="w-4 h-4" />
           </button>
           <button
-            onClick={() => onDelete(member.id)}
             className={cn(
               "p-1.5 rounded-lg bg-red-500/20",
               "hover:bg-red-500/30 text-red-300",
               "transition-colors",
             )}
+            onClick={() => onDelete(member.ocid)}
             type="button"
           >
             <Trash2 className="w-4 h-4" />
@@ -98,30 +98,30 @@ export default function MemberCard({ member, onEdit, onDelete }: Props) {
         <div className="flex justify-between text-gray-200">
           <span>직업</span>
           <span className="text-yellow-300 truncate ml-2">
-            {member.character_class}
+            {member.characterClass}
           </span>
         </div>
         <div className="flex justify-between text-gray-200">
           <span>직위</span>
-          <span className="text-purple-300">{member.position}</span>
+          <span className="text-purple-300">{member.permission}</span>
         </div>
         <div className="flex justify-between text-gray-200">
           <span>가입일</span>
           <span className="text-green-300">
-            {dayjs(member.joined_at).format("YYYY.MM.DD")}
+            {dayjs(member.joinedAt).format("YYYY.MM.DD")}
           </span>
         </div>
         <div className="flex justify-between text-gray-200">
           <span>가입 기간</span>
           <span className="text-cyan-300">
-            {dayjs(member.joined_at).fromNow()}
+            {dayjs(member.joinedAt).fromNow()}
           </span>
         </div>
-        {member.previous_guild && (
+        {member.previousGuild && (
           <div className="flex justify-between text-gray-200">
             <span>이전 길드</span>
             <span className="text-orange-300 truncate ml-2">
-              {member.previous_guild}
+              {member.previousGuild}
             </span>
           </div>
         )}

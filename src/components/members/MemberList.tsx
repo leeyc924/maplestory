@@ -1,61 +1,48 @@
 "use client";
 
+import type { GuildMember } from "@/types/member";
 import { Plus, Users } from "lucide-react";
-import { overlay } from "overlay-kit";
+import { useGuildMembersSuspense } from "@/api/members/fetch-client";
 import MemberCard from "@/components/members/MemberCard";
-import MemberDialog from "@/components/members/MemberDialog";
-import {
-  useAddMember,
-  useDeleteMember,
-  useMembersSuspense,
-  useUpdateMember,
-} from "@/hooks/useMembers";
 import { cn } from "@/lib/utils";
-import type {
-  CreateMemberInput,
-  Member,
-  UpdateMemberInput,
-} from "@/types/member";
 
 export default function MemberList() {
-  const { data: members } = useMembersSuspense();
-  const addMutation = useAddMember();
-  const updateMutation = useUpdateMember();
-  const deleteMutation = useDeleteMember();
-
+  const { data } = useGuildMembersSuspense({
+    params: {
+      guild_name: "이브",
+      world_name: "루나",
+    },
+  });
   function openAddDialog() {
-    overlay.open(({ isOpen, close }) => (
-      <MemberDialog
-        isOpen={isOpen}
-        close={close}
-        onSubmit={async (data) => {
-          await addMutation.mutateAsync(data as CreateMemberInput);
-        }}
-        mode="create"
-      />
-    ));
+    // overlay.open(({ isOpen, close }) => (
+    //   <MemberDialog
+    //     close={close}
+    //     isOpen={isOpen}
+    //     mode="create"
+    //     onSubmit={async (data) => {
+    //       alert("추가");
+    //     }}
+    //   />
+    // ));
   }
 
-  function openEditDialog(member: Member) {
-    overlay.open(({ isOpen, close }) => (
-      <MemberDialog
-        isOpen={isOpen}
-        close={close}
-        onSubmit={async (data) => {
-          await updateMutation.mutateAsync({
-            id: member.id,
-            data: data as UpdateMemberInput,
-          });
-        }}
-        member={member}
-        mode="edit"
-      />
-    ));
+  function openEditDialog(member: GuildMember) {
+    // overlay.open(({ isOpen, close }) => (
+    //   <MemberDialog
+    //     close={close}
+    //     isOpen={isOpen}
+    //     member={member}
+    //     mode="edit"
+    //     onSubmit={async (data) => {
+    //       alert("수정");
+    //     }}
+    //   />
+    // ));
   }
 
   async function handleDelete(id: string) {
     if (!confirm("정말 삭제하시겠습니까?")) return;
-    await deleteMutation.mutateAsync(id);
+    alert("삭제");
   }
 
   return (
@@ -74,11 +61,10 @@ export default function MemberList() {
             )}
           >
             <Users className="w-6 h-6 md:w-7 md:h-7 text-blue-300" />
-            길드원 현황 ({members.length}명)
+            길드원 현황 ({data.length}명)
           </h2>
 
           <button
-            onClick={openAddDialog}
             className={cn(
               "flex items-center gap-2 px-4 py-2 rounded-lg",
               "bg-gradient-to-r from-blue-500 to-purple-500",
@@ -86,6 +72,7 @@ export default function MemberList() {
               "text-white font-medium transition-all",
               "text-sm md:text-base",
             )}
+            onClick={openAddDialog}
             type="button"
           >
             <Plus className="w-4 h-4 md:w-5 md:h-5" />
@@ -99,17 +86,17 @@ export default function MemberList() {
             "gap-3 md:gap-4",
           )}
         >
-          {members.map((member) => (
+          {data.map((member) => (
             <MemberCard
-              key={member.id}
+              key={member.ocid}
               member={member}
-              onEdit={openEditDialog}
               onDelete={handleDelete}
+              onEdit={openEditDialog}
             />
           ))}
         </div>
 
-        {members.length === 0 && (
+        {data.length === 0 && (
           <div className="text-center py-12 text-white/60">
             길드원이 없습니다. 추가 버튼을 눌러 등록하세요.
           </div>

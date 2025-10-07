@@ -25,7 +25,7 @@ function Snow({
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const rafRef = useRef<number | null>(null);
   const flakesRef = useRef<Flake[]>([]);
-  const sizeRef = useRef({ w: 0, h: 0, dpr: 1 });
+  const sizeRef = useRef({ dpr: 1, h: 0, w: 0 });
 
   useEffect(() => setMounted(true), []);
 
@@ -42,7 +42,7 @@ function Snow({
     const w = window.innerWidth;
     const h = window.innerHeight;
 
-    sizeRef.current = { w, h, dpr };
+    sizeRef.current = { dpr, h, w };
     cvs.style.width = `${w}px`;
     cvs.style.height = `${h}px`;
     cvs.width = Math.floor(w * dpr);
@@ -55,11 +55,11 @@ function Snow({
     const arr: Flake[] = [];
     for (let i = 0; i < count; i++) {
       arr.push({
-        x: Math.random() * w,
-        y: Math.random() * h,
+        dir: Math.random() < 0.5 ? -1 : 1,
         r: rand(radius[0], radius[1]),
         spd: rand(speed[0], speed[1]),
-        dir: Math.random() < 0.5 ? -1 : 1,
+        x: Math.random() * w,
+        y: Math.random() * h,
       });
     }
     flakesRef.current = arr;
@@ -96,7 +96,7 @@ function Snow({
       }
 
       ctx.beginPath();
-      ctx.fillStyle = "rgba(255,255,255,0.95)";
+      ctx.fillStyle = "rgba(255,255,255,0.35)";
       ctx.strokeStyle = "rgba(0,0,0,0.18)";
       ctx.lineWidth = 0.6;
       ctx.arc(f.x, f.y, f.r, 0, Math.PI * 2);

@@ -22,11 +22,11 @@ function Header({ sidebarOpen, setSidebarOpen }: Props) {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2 md:gap-4">
             <button
-              onClick={() => setSidebarOpen(!sidebarOpen)}
               className={cn(
                 "lg:hidden text-white p-2 rounded-lg",
                 "hover:bg-white/10 transition-colors",
               )}
+              onClick={() => setSidebarOpen(!sidebarOpen)}
               type="button"
             >
               {sidebarOpen ? (

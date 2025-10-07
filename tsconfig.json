@@ -1,45 +1,45 @@
 {
   "compilerOptions": {
-    "target": "es6",
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "jsx": "preserve",
-    "declarationMap": false,
-    "declaration": false,
-    "strict": true,
-    "strictNullChecks": true,
-    "noFallthroughCasesInSwitch": true,
-    "noImplicitOverride": true,
-    "verbatimModuleSyntax": true,
-    "noPropertyAccessFromIndexSignature": false,
-    "noUncheckedIndexedAccess": false,
-    "isolatedModules": true,
     "allowJs": true,
+    "baseUrl": ".",
     "checkJs": true,
+    "composite": false,
+    "declaration": false,
+    "declarationMap": false,
     "esModuleInterop": true,
-    "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "resolveJsonModule": true,
-    "noEmit": true,
-    "moduleResolution": "bundler",
+    "incremental": true,
+    "inlineSources": false,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "lib": ["dom", "dom.iterable", "esnext"],
     "module": "esnext",
     "moduleDetection": "force",
-    "preserveWatchOutput": true,
-    "inlineSources": false,
-    "composite": false,
-    "pretty": true,
-    "incremental": true,
-    "tsBuildInfoFile": "${configDir}/tsconfig.tsbuildinfo",
-    "baseUrl": ".",
+    "moduleResolution": "bundler",
+    "noEmit": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": false,
+    "noUncheckedIndexedAccess": false,
     "paths": {
       "@/*": ["./src/*"]
     },
-    "types": ["vitest/globals", "@testing-library/jest-dom"],
     "plugins": [
       {
         "name": "next"
       }
-    ]
+    ],
+    "preserveWatchOutput": true,
+    "pretty": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "strictNullChecks": true,
+    "target": "es6",
+    "tsBuildInfoFile": "${configDir}/tsconfig.tsbuildinfo",
+    "types": ["vitest/globals", "@testing-library/jest-dom"],
+    "verbatimModuleSyntax": true
   },
-  "include": ["**/*.ts", "**/*.tsx", "next-env.d.ts", ".next/types/**/*.ts"],
-  "exclude": ["node_modules", ".next"]
+  "exclude": ["node_modules", ".next"],
+  "include": ["**/*.ts", "**/*.tsx", "next-env.d.ts", ".next/types/**/*.ts"]
 }

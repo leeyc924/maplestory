@@ -40,7 +40,7 @@ export default function DashboardLayout({
         />
       </div>
 
-      <Snow density={150} speed={[0.3, 1.0]} radius={[2, 5]} />
+      <Snow density={150} radius={[2, 5]} speed={[0.3, 1.0]} />
 
       {sidebarOpen && (
         <div
@@ -55,11 +55,11 @@ export default function DashboardLayout({
         />
       )}
 
-      <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+      <Header setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} />
 
       <div className="container mx-auto px-3 md:px-6 py-4 md:py-6">
         <div className="flex gap-4 md:gap-6">
-          <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+          <Sidebar setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} />
           <main className="flex-1 relative z-10 min-w-0">{children}</main>
         </div>
       </div>

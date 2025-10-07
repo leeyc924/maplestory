@@ -16,16 +16,16 @@ type MenuItem = {
 
 const menuItems: MenuItem[] = [
   {
+    href: "/members",
+    icon: Users,
     id: "members",
     label: "길드원 현황",
-    icon: Users,
-    href: "/members",
   },
   {
+    href: "/suro",
+    icon: TrendingUp,
     id: "suro",
     label: "수로 현황",
-    icon: TrendingUp,
-    href: "/suro",
   },
 ];
 
@@ -60,9 +60,6 @@ function Sidebar({ sidebarOpen, setSidebarOpen }: Props) {
 
             return (
               <Link
-                key={item.id}
-                href={item.href}
-                onClick={() => setSidebarOpen(false)}
                 className={cn(
                   "w-full flex items-center",
                   "gap-2 md:gap-3 px-3 md:px-4",
@@ -76,6 +73,9 @@ function Sidebar({ sidebarOpen, setSidebarOpen }: Props) {
                       )
                     : cn("text-white/80 hover:bg-white/10", "hover:text-white"),
                 )}
+                href={item.href}
+                key={item.id}
+                onClick={() => setSidebarOpen(false)}
               >
                 <Icon className="w-4 h-4 md:w-5 md:h-5" />
                 <span className="font-medium">{item.label}</span>

@@ -40,25 +40,25 @@ export default function SuroPage() {
             <div className="space-y-3">
               {[
                 {
-                  name: "노말 스우",
                   cleared: 45,
-                  total: 45,
                   color: "green",
-                },
-                {
-                  name: "하드 스우",
-                  cleared: 38,
+                  name: "노말 스우",
                   total: 45,
-                  color: "yellow",
                 },
                 {
-                  name: "익스 스우",
+                  cleared: 38,
+                  color: "yellow",
+                  name: "하드 스우",
+                  total: 45,
+                },
+                {
                   cleared: 12,
-                  total: 30,
                   color: "orange",
+                  name: "익스 스우",
+                  total: 30,
                 },
               ].map((boss) => (
-                <div key={boss.name} className="space-y-2">
+                <div className="space-y-2" key={boss.name}>
                   <div
                     className={cn(
                       "flex justify-between text-white",
@@ -115,25 +115,25 @@ export default function SuroPage() {
             <div className="space-y-3">
               {[
                 {
-                  name: "자쿰",
                   cleared: 42,
-                  total: 45,
                   color: "green",
+                  name: "자쿰",
+                  total: 45,
                 },
                 {
-                  name: "핑크빈",
                   cleared: 35,
-                  total: 45,
                   color: "yellow",
+                  name: "핑크빈",
+                  total: 45,
                 },
                 {
-                  name: "파풀라투스",
                   cleared: 28,
-                  total: 45,
                   color: "orange",
+                  name: "파풀라투스",
+                  total: 45,
                 },
               ].map((boss) => (
-                <div key={boss.name} className="space-y-2">
+                <div className="space-y-2" key={boss.name}>
                   <div
                     className={cn(
                       "flex justify-between text-white",
@@ -190,21 +190,20 @@ export default function SuroPage() {
           </h3>
           <div className="space-y-2">
             {[
-              { member: "길드원1", boss: "하드 스우", time: "3분 전" },
+              { boss: "하드 스우", member: "길드원1", time: "3분 전" },
               {
-                member: "길드원2",
                 boss: "익스 스우",
+                member: "길드원2",
                 time: "15분 전",
               },
               {
-                member: "길드원3",
                 boss: "노말 스우",
+                member: "길드원3",
                 time: "1시간 전",
               },
-              { member: "길드원4", boss: "자쿰", time: "2시간 전" },
+              { boss: "자쿰", member: "길드원4", time: "2시간 전" },
             ].map((record) => (
               <div
-                key={`${record.member}-${record.boss}-${record.time}`}
                 className={cn(
                   "flex flex-col sm:flex-row",
                   "sm:justify-between sm:items-center",
@@ -212,6 +211,7 @@ export default function SuroPage() {
                   "py-2.5 md:py-3 hover:bg-black/30",
                   "transition-colors gap-1 sm:gap-2",
                 )}
+                key={`${record.member}-${record.boss}-${record.time}`}
               >
                 <div
                   className={cn("flex items-center gap-2 md:gap-3", "min-w-0")}

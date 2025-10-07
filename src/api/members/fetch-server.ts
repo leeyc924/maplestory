@@ -1,4 +1,3 @@
-import { headers } from "next/headers";
 import {
   getQueryClient,
   QUERY_KEY,
@@ -6,20 +5,11 @@ import {
 } from "@/lib/react-query";
 import { getGuildMembers } from "./fetch";
 
-export const prefetchGuildMembersQuery = async ({
-  params,
-}: {
-  params: Parameters<typeof getGuildMembers>[0]["params"];
-}) => {
+export const prefetchGuildMembersQuery = async () => {
   const queryClient = getQueryClient();
-  const headerList = await headers();
 
   await queryClient.prefetchQuery({
-    queryFn: () =>
-      getGuildMembers({
-        headers: () => headerList,
-        params,
-      }),
-    queryKey: QUERY_KEY_FACTORY(QUERY_KEY.GUILD_MEMBERS, params),
+    queryFn: () => getGuildMembers(),
+    queryKey: QUERY_KEY_FACTORY(QUERY_KEY.GUILD_MEMBERS),
   });
 };

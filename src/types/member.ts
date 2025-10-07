@@ -1,4 +1,6 @@
 export type GuildMember = {
+  /** 데이터베이스 ID */
+  id: string;
   /** 캐릭터 직업 */
   characterClass: string;
   /** 캐릭터 레벨 */
@@ -26,4 +28,19 @@ export type GuildMember = {
   previousGuild?: string;
   /** 비고 */
   note: string;
+  /** 생성일 */
+  createdAt?: string;
+  /** 수정일 */
+  updatedAt?: string;
 };
+
+export type CreateMemberInput = Omit<
+  GuildMember,
+  "id" | "createdAt" | "updatedAt"
+>;
+
+export type UpdateMemberInput = Partial<CreateMemberInput> & {
+  id: string;
+};
+
+export type Member = GuildMember;

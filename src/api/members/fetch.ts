@@ -1,4 +1,3 @@
-import type { GuildMember } from "@/types/member";
 import type {
   V1CharacterBasicParameters,
   V1CharacterBasicResponse,
@@ -9,9 +8,10 @@ import type {
   V1IdParameters,
   V1IdResponse,
 } from "./schema";
+import { getAllMembers } from "@/db/member";
 import { mapleApiClient } from "@/lib/http-client";
 
-const getGuildBasic = async ({
+export const getGuildBasic = async ({
   params,
   headers,
 }: {
@@ -31,7 +31,7 @@ const getGuildBasic = async ({
   return response.data;
 };
 
-const getGuildId = async ({
+export const getGuildId = async ({
   params,
   headers,
 }: {
@@ -52,7 +52,7 @@ const getGuildId = async ({
   return response.data;
 };
 
-const getId = async ({
+export const getId = async ({
   params,
   headers,
 }: {
@@ -73,7 +73,7 @@ const getId = async ({
   return response.data;
 };
 
-const getCharacterBasic = async ({
+export const getCharacterBasic = async ({
   params,
   headers,
 }: {
@@ -94,57 +94,7 @@ const getCharacterBasic = async ({
   return response.data;
 };
 
-export interface GetGuildMembersParams {
-  params: V1GuildIdParameters & Pick<V1GuildBasicParamters, "date">;
-  headers?: () => Headers;
-}
-
-export const getGuildMembers = async ({
-  params,
-  headers,
-}: GetGuildMembersParams) => {
-  const { guild_name, world_name, date } = params;
-  const { oguild_id } = await getGuildId({
-    headers,
-    params: { guild_name, world_name },
-  });
-
-  const { guild_member } = await getGuildBasic({
-    headers,
-    params: { oguild_id },
-  });
-
-  const memberData: (GuildMember | null)[] = await Promise.all(
-    guild_member.map(async (name) => {
-      try {
-        const ocid = await getId({
-          headers,
-          params: { character_name: name },
-        });
-        if (!ocid) return null;
-        const basic = await getCharacterBasic({
-          headers,
-          params: { ocid: ocid.ocid },
-        });
-        if (!basic) return null;
-
-        return {
-          accessFlag: basic.access_flag,
-          characterClass: basic.character_class,
-          characterImage: basic.character_image,
-          characterLevel: basic.character_level,
-          characterName: basic.character_name,
-          joinedAt: "",
-          note: "",
-          ocid: ocid.ocid,
-          permission: "",
-          previousGuild: "",
-        };
-      } catch {
-        return null;
-      }
-    }),
-  );
-
-  return memberData.filter((member) => member !== null);
+export const getGuildMembers = async () => {
+  const memberData = await getAllMembers();
+  return memberData;
 };

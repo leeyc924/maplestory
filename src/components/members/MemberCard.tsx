@@ -4,6 +4,7 @@ import dayjs from "dayjs";
 import { Edit, Trash2 } from "lucide-react";
 import "dayjs/locale/ko";
 
+import type { GuildMember } from "@/types/member";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 
@@ -109,12 +110,6 @@ export default function MemberCard({ member, onEdit, onDelete }: Props) {
           <span>가입일</span>
           <span className="text-green-300">
             {dayjs(member.joinedAt).format("YYYY.MM.DD")}
-          </span>
-        </div>
-        <div className="flex justify-between text-gray-200">
-          <span>가입 기간</span>
-          <span className="text-cyan-300">
-            {dayjs(member.joinedAt).fromNow()}
           </span>
         </div>
         {member.previousGuild && (

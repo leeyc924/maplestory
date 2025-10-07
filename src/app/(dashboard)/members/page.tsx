@@ -14,12 +14,7 @@ function MemberListSkeleton() {
 
 export default async function MembersPage() {
   const queryClient = getQueryClient();
-  await prefetchGuildMembersQuery({
-    params: {
-      guild_name: "이브",
-      world_name: "루나",
-    },
-  });
+  await prefetchGuildMembersQuery();
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>

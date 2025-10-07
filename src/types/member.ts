@@ -32,6 +32,8 @@ export type GuildMember = {
   createdAt?: string;
   /** 수정일 */
   updatedAt?: string;
+  /** 월드 명 */
+  guildName?: string;
 };
 
 export type CreateMemberInput = Omit<

@@ -3,12 +3,9 @@
 import dayjs from "dayjs";
 import { Edit, Trash2 } from "lucide-react";
 import "dayjs/locale/ko";
-import type { GuildMember } from "@/types/member";
-import relativeTime from "dayjs/plugin/relativeTime";
-import { cn } from "@/lib/utils";
 
-dayjs.extend(relativeTime);
-dayjs.locale("ko");
+import Image from "next/image";
+import { cn } from "@/lib/utils";
 
 type Props = {
   member: GuildMember;
@@ -32,13 +29,16 @@ export default function MemberCard({ member, onEdit, onDelete }: Props) {
       <div className="flex items-start justify-between mb-3">
         <div className="flex items-center gap-2 md:gap-3 flex-1 min-w-0">
           {member.characterImage ? (
-            <img
+            <Image
               alt={member.characterName}
               className={cn(
                 "w-20 h-20 md:w-24 md:h-24",
                 "rounded-full object-cover flex-shrink-0 scale-200",
               )}
+              height={80}
               src={member.characterImage}
+              unoptimized
+              width={80}
             />
           ) : (
             <div

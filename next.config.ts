@@ -4,7 +4,7 @@ const nextConfig: NextConfig = {
   async rewrites() {
     return [
       {
-        destination: `/maple/api/:path*`,
+        destination: `/api/maple/:path*`,
         source: "/api/maple/:path*",
       },
     ];

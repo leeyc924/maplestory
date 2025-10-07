@@ -66,6 +66,7 @@ const formatRequestHeaders = <T extends Headers>(
     ...(ipAddress && { "x-forwarded-for": ipAddress }),
     ...(referer && { referer }),
     ...(requestId && { "x-request-id": requestId }),
+    "x-nxopen-api-key": process.env.MAPLE_API_KEY || "",
   };
 };
 
@@ -239,25 +240,23 @@ export const httpCreate = (
   return httpClient;
 };
 
+const mapleApiBaseUrl =
+  typeof window === "undefined"
+    ? "https://open.api.nexon.com/maplestory"
+    : `${process.env.NEXT_PUBLIC_HOST_URL}/api/maple`;
 export const mapleApiClient = () => {
-  const httpClient = httpCreate(
-    `https://open.api.nexon.com/maplestory${typeof window === "undefined" ? "" : "/maple/api"}`,
-    {
-      headers: {
-        "x-nxopen-api-key": process.env.MAPLE_API_KEY || "",
+  const httpClient = httpCreate(mapleApiBaseUrl, {
+    register: {
+      onError(error) {
+        console.log(error);
+        return Promise.reject(error.reason);
       },
-      register: {
-        onError(error) {
-          console.log(error);
-          return Promise.reject(error.reason);
-        },
-        onNetworkError: (error) => {
-          console.log(error);
-          return Promise.reject(error.reason);
-        },
+      onNetworkError: (error) => {
+        console.log(error);
+        return Promise.reject(error.reason);
       },
     },
-  );
+  });
 
   return httpClient;
 };

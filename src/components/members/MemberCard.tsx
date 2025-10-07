@@ -43,7 +43,7 @@ export default function MemberCard({ member, onEdit, onDelete }: Props) {
       )}
     >
       <div className="flex items-start justify-between mb-3">
-        <div className="flex items-center gap-2 md:gap-3 flex-1">
+        <div className="flex gap-2 md:gap-3 flex-1">
           {member.characterImage ? (
             <Image
               alt={member.characterName}
@@ -69,46 +69,50 @@ export default function MemberCard({ member, onEdit, onDelete }: Props) {
               {firstChar}
             </div>
           )}
-          <div className="flex-1">
-            <div
-              className={cn(
-                "text-white font-semibold",
-                "text-sm md:text-base",
-                "flex items-center gap-2",
-              )}
-            >
-              <span className="whitespace-nowrap">{member.characterName}</span>
-              {getPermissionIcon(member.permission)}
+
+          <div className="flex flex-1 flex-shrink-0 flex-col">
+            <div className="flex gap-1 ml-auto">
+              <button
+                className={cn(
+                  "p-1.5 rounded-lg bg-blue-500/20",
+                  "hover:bg-blue-500/30 text-blue-300",
+                  "transition-colors",
+                )}
+                onClick={() => onEdit(member)}
+                type="button"
+              >
+                <Edit className="w-4 h-4" />
+              </button>
+              <button
+                className={cn(
+                  "p-1.5 rounded-lg bg-red-500/20",
+                  "hover:bg-red-500/30 text-red-300",
+                  "transition-colors",
+                )}
+                onClick={() => onDelete(member.ocid)}
+                type="button"
+              >
+                <Trash2 className="w-4 h-4" />
+              </button>
             </div>
-            <div className="text-blue-200 text-xs md:text-sm">
-              Lv. {member.characterLevel}
+            <div className="flex-1">
+              <div
+                className={cn(
+                  "text-white font-semibold",
+                  "text-sm md:text-base",
+                  "flex items-center gap-2",
+                )}
+              >
+                <span className="whitespace-nowrap">
+                  {member.characterName}
+                </span>
+                {getPermissionIcon(member.permission)}
+              </div>
+              <div className="text-blue-200 text-xs md:text-sm">
+                Lv. {member.characterLevel}
+              </div>
             </div>
           </div>
-        </div>
-
-        <div className="flex gap-1 flex-shrink-0">
-          <button
-            className={cn(
-              "p-1.5 rounded-lg bg-blue-500/20",
-              "hover:bg-blue-500/30 text-blue-300",
-              "transition-colors",
-            )}
-            onClick={() => onEdit(member)}
-            type="button"
-          >
-            <Edit className="w-4 h-4" />
-          </button>
-          <button
-            className={cn(
-              "p-1.5 rounded-lg bg-red-500/20",
-              "hover:bg-red-500/30 text-red-300",
-              "transition-colors",
-            )}
-            onClick={() => onDelete(member.ocid)}
-            type="button"
-          >
-            <Trash2 className="w-4 h-4" />
-          </button>
         </div>
       </div>
 

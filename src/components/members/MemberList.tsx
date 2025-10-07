@@ -65,7 +65,7 @@ export default function MemberList() {
         <div
           className={cn(
             "glass-effect rounded-xl md:rounded-2xl",
-            "p-4 md:p-6 shadow-2xl",
+            "p-6 md:p-8 shadow-2xl",
           )}
         >
           <div className="flex items-center justify-between mb-4 md:mb-6">
@@ -98,8 +98,8 @@ export default function MemberList() {
 
           <div
             className={cn(
-              "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3",
-              "gap-3 md:gap-4",
+              "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4",
+              "gap-4 md:gap-6",
             )}
           >
             {members.map((member) => (

@@ -57,7 +57,7 @@ export default function DashboardLayout({
 
       <Header setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} />
 
-      <div className="container mx-auto px-3 md:px-6 py-4 md:py-6">
+      <div className="max-w-[1600px] mx-auto px-4 md:px-8 py-4 md:py-6">
         <div className="flex gap-4 md:gap-6">
           <Sidebar setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} />
           <main className="flex-1 relative z-10 min-w-0">{children}</main>

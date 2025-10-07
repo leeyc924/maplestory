@@ -1,7 +1,7 @@
 "use client";
 
 import dayjs from "dayjs";
-import { Edit, Trash2 } from "lucide-react";
+import { Crown, Edit, Shield, Trash2, User } from "lucide-react";
 import "dayjs/locale/ko";
 
 import type { GuildMember } from "@/types/member";
@@ -12,6 +12,21 @@ type Props = {
   member: GuildMember;
   onEdit: (member: GuildMember) => void;
   onDelete: (id: string) => void;
+};
+
+const getPermissionIcon = (permission?: string) => {
+  if (!permission) return null;
+
+  const normalizedPermission = permission.toLowerCase();
+
+  if (normalizedPermission === "마스터") {
+    return <Crown className="w-4 h-4 text-yellow-400" />;
+  }
+  if (normalizedPermission === "부마스터") {
+    return <Shield className="w-4 h-4 text-purple-400" />;
+  }
+
+  return <User className="w-4 h-4 text-gray-400" />;
 };
 
 export default function MemberCard({ member, onEdit, onDelete }: Props) {
@@ -28,7 +43,7 @@ export default function MemberCard({ member, onEdit, onDelete }: Props) {
       )}
     >
       <div className="flex items-start justify-between mb-3">
-        <div className="flex items-center gap-2 md:gap-3 flex-1 min-w-0">
+        <div className="flex items-center gap-2 md:gap-3 flex-1">
           {member.characterImage ? (
             <Image
               alt={member.characterName}
@@ -54,14 +69,16 @@ export default function MemberCard({ member, onEdit, onDelete }: Props) {
               {firstChar}
             </div>
           )}
-          <div className="min-w-0">
+          <div className="flex-1">
             <div
               className={cn(
                 "text-white font-semibold",
-                "text-sm md:text-base truncate",
+                "text-sm md:text-base",
+                "flex items-center gap-2",
               )}
             >
-              {member.characterName}
+              <span className="whitespace-nowrap">{member.characterName}</span>
+              {getPermissionIcon(member.permission)}
             </div>
             <div className="text-blue-200 text-xs md:text-sm">
               Lv. {member.characterLevel}
@@ -103,26 +120,20 @@ export default function MemberCard({ member, onEdit, onDelete }: Props) {
           </span>
         </div>
         <div className="flex justify-between text-gray-200">
-          <span>직위</span>
-          <span className="text-purple-300">{member.permission}</span>
-        </div>
-        <div className="flex justify-between text-gray-200">
           <span>가입일</span>
           <span className="text-green-300">
             {dayjs(member.joinedAt).format("YYYY.MM.DD")}
           </span>
         </div>
-        {member.previousGuild && (
-          <div className="flex justify-between text-gray-200">
-            <span>이전 길드</span>
-            <span className="text-orange-300 truncate ml-2">
-              {member.previousGuild}
-            </span>
-          </div>
-        )}
+        <div className="flex justify-between text-gray-200">
+          <span>이전 길드</span>
+          <span className="text-orange-300 truncate ml-2">
+            {member.previousGuild || "-"}
+          </span>
+        </div>
         {member.note && (
           <div className="mt-2 pt-2 border-t border-white/10">
-            <p className="text-gray-300 text-xs">{member.note}</p>
+            <p className="text-gray-300 text-xs">* {member.note}</p>
           </div>
         )}
       </div>

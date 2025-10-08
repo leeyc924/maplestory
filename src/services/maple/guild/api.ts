@@ -3,6 +3,8 @@ import type {
   V1GuildBasicResponse,
   V1GuildIdParameters,
   V1GuildIdResponse,
+  V1RankingGuildParameters,
+  V1RankingGuildResponse,
 } from "./types";
 import { mapleApiClient } from "../client";
 
@@ -34,5 +36,20 @@ export const getGuildId = async ({
     headers,
   );
 
+  return response.data;
+};
+
+export const getRankingGuild = async ({
+  params,
+  headers,
+}: {
+  params: V1RankingGuildParameters;
+  headers?: () => Headers;
+}) => {
+  const response = await mapleApiClient().get<V1RankingGuildResponse>(
+    "/v1/ranking/guild",
+    { query: { ...params } },
+    headers,
+  );
   return response.data;
 };

@@ -1,9 +1,6 @@
 "use client";
 
-import type {
-  CreateMemberInput,
-  GuildMember,
-} from "@/domians/members/types/member";
+import type { GuildMember } from "@/domians/members/types/member";
 import { X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { cn } from "@/shared/lib/utils";
@@ -24,7 +21,7 @@ export default function MemberDialog({
   member,
   onSuccess,
 }: Props) {
-  const [formData, setFormData] = useState<CreateMemberInput>({
+  const [formData, setFormData] = useState<any>({
     accessFlag: "true",
     characterClass: "",
     characterImage: "",
@@ -101,7 +98,7 @@ export default function MemberDialog({
     >,
   ) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({
+    setFormData((prev: any) => ({
       ...prev,
       [name]: name === "characterLevel" ? Number(value) : value,
     }));
@@ -277,7 +274,7 @@ export default function MemberDialog({
               )}
               name="joinedAt"
               onChange={(e) => {
-                setFormData((prev) => ({
+                setFormData((prev: any) => ({
                   ...prev,
                   joinedAt: new Date(e.target.value).toISOString(),
                 }));

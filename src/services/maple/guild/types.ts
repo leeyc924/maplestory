@@ -63,3 +63,39 @@ export interface V1GuildIdResponse {
   /** 길드 식별자 */
   oguild_id: string;
 }
+
+export interface V1RankingGuildParameters {
+  /** 월드 명 */
+  world_name?: string;
+  /** 조회 기준일 (KST, YYYY-MM-DD) */
+  date: string;
+  /** 랭킹 타입 (0:주간 명성치, 1:플래그 레이스, 2:지하 수로) */
+  ranking_type: number;
+  /** 길드 명 */
+  guild_name?: string;
+  /** 페이지 번호 */
+  page?: number;
+}
+
+/** 길드 랭킹 응답 */
+export interface V1RankingGuildResponse {
+  /** 길드 랭킹 정보 */
+  ranking: {
+    /** 랭킹 업데이트 일자 (KST) */
+    date: string; // example: 2023-12-22
+    /** 길드 랭킹 순위 */
+    ranking: number;
+    /** 길드 명 */
+    guild_name: string;
+    /** 월드 명 */
+    world_name: string;
+    /** 길드 레벨 */
+    guild_level: number;
+    /** 길드 마스터 캐릭터 명 */
+    guild_master_name: string;
+    /** 길드 마크 */
+    guild_mark: string;
+    /** 길드 포인트 */
+    guild_point: number;
+  }[];
+}

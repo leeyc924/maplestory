@@ -8,7 +8,6 @@ import { useDeleteGuildMember } from "../api/mutations";
 import { useGuildMembersSuspense } from "../api/queries";
 import MemberCard from "./MemberCard";
 import MemberDialog from "./MemberDialog";
-import TestButton from "./TestButton";
 
 export default function MemberList() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -95,7 +94,6 @@ export default function MemberList() {
               <span className="hidden sm:inline">길드원 추가</span>
             </button>
           </div>
-          {process.env.NODE_ENV === "development" && <TestButton />}
           <div
             className={cn(
               "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4",

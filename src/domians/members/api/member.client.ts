@@ -1,7 +1,7 @@
 import type { GuildMember } from "../types/member";
 import { internalApiClient } from "@/services/internal/client";
-import { getGuildBasic, getGuildId } from "@/services/maple/api/api";
 import { getCharacterBasic, getId } from "@/services/maple/charactor/api";
+import { getGuildBasic, getGuildId } from "@/services/maple/guild/api";
 
 export const getGuildMembers = async (headers?: () => Headers) => {
   const response = await internalApiClient().get<GuildMember[]>(

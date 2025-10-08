@@ -1,8 +1,9 @@
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
+import { headers } from "next/headers";
 import { Suspense } from "react";
-import { prefetchGuildMembersQuery } from "@/api/members/fetch-server";
-import MemberList from "@/components/members/MemberList";
-import { getQueryClient } from "@/lib/react-query";
+import { prefetchGuildMembersQuery } from "@/domians/members/api/queries";
+import MemberList from "@/domians/members/components/MemberList";
+import { getQueryClient } from "@/shared/lib/react-query";
 
 function MemberListSkeleton() {
   return (
@@ -13,8 +14,9 @@ function MemberListSkeleton() {
 }
 
 export default async function MembersPage() {
+  const headerList = await headers();
   const queryClient = getQueryClient();
-  await prefetchGuildMembersQuery();
+  await prefetchGuildMembersQuery(() => headerList);
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>

@@ -1,10 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import Snow from "@/components/effects/Snow";
-import Header from "@/components/layout/Header";
-import Sidebar from "@/components/layout/Sidebar";
-import { cn } from "@/lib/utils";
+import Snow from "@/shared/components/effects/Snow";
+import Header from "@/shared/components/layout/Header";
+import Sidebar from "@/shared/components/layout/Sidebar";
+import { cn } from "@/shared/lib/utils";
 
 export default function DashboardLayout({
   children,

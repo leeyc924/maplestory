@@ -3,7 +3,7 @@
 import { QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { OverlayProvider as OverlayKitProvider } from "overlay-kit";
-import { getQueryClient } from "@/lib/react-query";
+import { getQueryClient } from "@/shared/lib/react-query";
 
 type Props = {
   children: React.ReactNode;

@@ -1,6 +1,6 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
-import { type HttpResponse, mapleApiClient } from "@/lib/http-client";
+import { mapleApiClient } from "@/services/maple/client";
 
 export type Params = { path: string[] };
 
@@ -35,18 +35,6 @@ export async function prepareRequest(
     requestData,
   };
 }
-
-// Response 처리
-export const handleResponse = async (
-  fetch: () => Promise<HttpResponse<object>>,
-) => {
-  try {
-    const response = await fetch();
-    return NextResponse.json(response.data, { status: response.status });
-  } catch (error) {
-    return NextResponse.json(error);
-  }
-};
 
 export async function GET(
   req: NextRequest,

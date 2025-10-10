@@ -110,3 +110,15 @@ export function transformKeysToSnakeCase<T = any>(obj: Record<string, any>): T {
 
   return transformed as T;
 }
+
+export function parseToEnum<T extends readonly unknown[]>(
+  value: unknown,
+  enumList: T,
+  defaultValue: T[number],
+): T[number] {
+  if (enumList.includes(value)) {
+    return value as T[number];
+  }
+
+  return defaultValue as T[number];
+}

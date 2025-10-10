@@ -16,7 +16,6 @@ export default function MemberList() {
   );
 
   const { data: members } = useGuildMembersSuspense();
-  console.log(`members`, members);
   const deleteMutation = useDeleteGuildMember();
 
   function openAddDialog() {

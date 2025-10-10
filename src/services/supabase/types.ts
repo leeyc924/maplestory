@@ -65,6 +65,30 @@ export type Database = {
         }
         Relationships: []
       }
+      suro_ranking: {
+        Row: {
+          date: string
+          guild_name: string
+          guild_point: number
+          id: number
+          ranking: number
+        }
+        Insert: {
+          date: string
+          guild_name: string
+          guild_point: number
+          id?: number
+          ranking: number
+        }
+        Update: {
+          date?: string
+          guild_name?: string
+          guild_point?: number
+          id?: number
+          ranking?: number
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

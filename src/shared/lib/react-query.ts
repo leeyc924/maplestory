@@ -5,6 +5,7 @@ import { cache } from "react";
 export const QUERY_KEY = Object.freeze({
   GUILD_MEMBERS: "GUILD_MEMBERS",
   SURO_RANKING: "SURO_RANKING",
+  SURO_RANKING_TODAY: "SURO_RANKING_TODAY",
 });
 
 export const QUERY_KEY_FACTORY = <T>(

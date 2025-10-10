@@ -77,7 +77,7 @@ const CustomTooltip = ({ active, payload, label }: CustomTooltipProps) => {
                 isEveGuild(entry.dataKey) ? "text-blue-600" : "text-slate-600"
               }`}
             >
-              {formatKoreanNumber(entry.payload[entry.dataKey] as number)}
+              {(entry.payload[entry.dataKey] as number).toLocaleString("ko-KR")}
             </span>
           </div>
         ))}

@@ -17,6 +17,12 @@ export async function GET(request: NextRequest) {
       world_name: EVE_WORLD_NAME,
     },
   });
+  if (!todayRanking.ranking) {
+    return NextResponse.json({
+      today: [],
+      yesterday: [],
+    });
+  }
 
   const yesterdayRanking = isFriday
     ? null

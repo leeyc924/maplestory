@@ -53,7 +53,7 @@ export function SuroQuarterFilter({ className }: SuroQuarterFilterProps) {
           {/* 연도 선택 */}
           <div className="relative">
             <select
-              className="appearance-none bg-black/30 text-white border border-white/20 rounded-lg px-4 py-2 pr-8 
+              className="appearance-none bg-black/30 text-white border border-white/20 rounded-lg px-4 py-2 pr-8 cursor-pointer
                          hover:bg-black/40 focus:outline-none focus:ring-2 focus:ring-yellow-400/50 transition-all"
               onChange={(e) => handleYearChange(parseInt(e.target.value, 10))}
               value={currentYear}
@@ -74,6 +74,7 @@ export function SuroQuarterFilter({ className }: SuroQuarterFilterProps) {
                 className={cn(
                   "px-4 py-2 rounded-md text-sm font-medium transition-all duration-200",
                   "hover:bg-white/10",
+                  "cursor-pointer",
                   currentQuarter === quarter
                     ? "bg-yellow-400 text-black shadow-lg"
                     : "text-white/80 hover:text-white",

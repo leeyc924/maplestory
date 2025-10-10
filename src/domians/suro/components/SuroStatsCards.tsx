@@ -8,7 +8,7 @@ import {
 } from "lucide-react";
 import { EVE_GUILD_NAME } from "@/shared/lib/consts";
 import { useSuroRanginkTodaySuspense } from "../api/queries";
-import { calculateSuroStats, formatKoreanNumber } from "../lib/utils";
+import { calculateSuroStats } from "../lib/utils";
 
 export function SuroStatsCards() {
   const { data: todayData } = useSuroRanginkTodaySuspense();
@@ -36,7 +36,7 @@ export function SuroStatsCards() {
       text:
         change === 0
           ? "변화없음"
-          : `${sign}${formatKoreanNumber(Math.abs(change))} (${sign}${changePercent.toFixed(1)}%)`,
+          : `${sign}${Math.abs(change).toLocaleString("ko-KR")} (${sign}${changePercent.toFixed(1)}%)`,
     };
   };
 
@@ -53,13 +53,13 @@ export function SuroStatsCards() {
     const upperInfo =
       upperRankPointDiff !== undefined &&
       upperRankPointDiffPercent !== undefined
-        ? `${currentRanking - 1}등 대비 -${formatKoreanNumber(upperRankPointDiff)} (-${upperRankPointDiffPercent.toFixed(1)}%)`
+        ? `${currentRanking - 1}등 대비 -${upperRankPointDiff.toLocaleString("ko-KR")} (-${upperRankPointDiffPercent.toFixed(1)}%)`
         : null;
 
     const lowerInfo =
       lowerRankPointDiff !== undefined &&
       lowerRankPointDiffPercent !== undefined
-        ? `${currentRanking + 1}등 대비 +${formatKoreanNumber(lowerRankPointDiff)} (+${lowerRankPointDiffPercent.toFixed(1)}%)`
+        ? `${currentRanking + 1}등 대비 +${lowerRankPointDiff.toLocaleString("ko-KR")} (+${lowerRankPointDiffPercent.toFixed(1)}%)`
         : null;
 
     if (currentRanking === 1) {
@@ -109,7 +109,7 @@ export function SuroStatsCards() {
         <div className="flex items-center justify-between mb-2">
           <Activity className="w-6 h-6 text-blue-400" />
           <span className="text-2xl font-bold text-blue-400">
-            {formatKoreanNumber(stats.currentGuildPoint)}
+            {stats.currentGuildPoint.toLocaleString("ko-KR")}
           </span>
         </div>
         <h3 className="text-white font-semibold">현재 점수</h3>

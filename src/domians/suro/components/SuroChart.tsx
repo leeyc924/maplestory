@@ -1,6 +1,5 @@
 "use client";
 import type { ChartData } from "../types/suro";
-import dayjs from "dayjs";
 import { TrendingUp } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import { useMemo, useState } from "react";
@@ -14,6 +13,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+import dayjs from "@/shared/lib/dayjs";
 import { useSuroRanginkSuspense } from "../api/queries";
 import { CHART_COLORS } from "../lib/consts";
 import {

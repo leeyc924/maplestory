@@ -1,7 +1,7 @@
 "use client";
 
-import dayjs from "dayjs";
 import { Crown, Edit, Shield, Trash2, User } from "lucide-react";
+import dayjs from "@/shared/lib/dayjs";
 import "dayjs/locale/ko";
 
 import type { GuildMember } from "@/domians/members/types/member";

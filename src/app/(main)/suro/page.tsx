@@ -10,6 +10,7 @@ import { SuroQuarterFilter } from "@/domians/suro/components/SuroQuarterFilter";
 import { SuroRankingTable } from "@/domians/suro/components/SuroRankingTable";
 import { SuroStatsCards } from "@/domians/suro/components/SuroStatsCards";
 import { getQuarter, getYear } from "@/domians/suro/lib/utils";
+import dayjs from "@/shared/lib/dayjs";
 import { getQueryClient } from "@/shared/lib/react-query";
 
 export default async function SuroPage({
@@ -30,12 +31,12 @@ export default async function SuroPage({
     params: { quarter, year },
   });
   await prefetchSuroRankingTodayQuery({ headers: () => headerList });
-
+  const time = dayjs().format("YYYY-MM-DD HH:mm:ss");
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
       <div className="space-y-4 md:space-y-6 animate-fade-in">
         {/* 수로 랭킹 헤더 */}
-        <SuroHeader />
+        <SuroHeader time={time} />
         {/* 주요 통계 카드들 */}
         <SuroStatsCards />
         {/* 분기 선택 필터 */}

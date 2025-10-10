@@ -1,8 +1,8 @@
 import type { SuroRanking } from "@/domians/suro/types/suro";
-import dayjs from "dayjs";
 import { type NextRequest, NextResponse } from "next/server";
 import { getRankingGuild } from "@/services/maple/guild/api";
 import { EVE_WORLD_NAME } from "@/shared/lib/consts";
+import dayjs from "@/shared/lib/dayjs";
 
 export async function GET(request: NextRequest) {
   const today = dayjs();

@@ -1,6 +1,6 @@
 import type { GuildMember } from "@/domians/members/types/member";
-import dayjs from "dayjs";
 import { supabase } from "@/services/supabase/client";
+import dayjs from "@/shared/lib/dayjs";
 import { transformKeysToCamelCase } from "@/shared/lib/utils";
 
 /**

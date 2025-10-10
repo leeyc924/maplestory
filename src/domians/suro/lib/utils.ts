@@ -1,6 +1,6 @@
 import type { SuroRankingToday, SuroStats } from "../types/suro";
-import dayjs from "dayjs";
 import { EVE_GUILD_NAME } from "@/shared/lib/consts";
+import dayjs from "@/shared/lib/dayjs";
 import { parseToEnum } from "@/shared/lib/utils";
 import { QUARTERS } from "./consts";
 

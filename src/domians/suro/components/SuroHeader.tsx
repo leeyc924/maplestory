@@ -2,7 +2,7 @@
 import { Trophy } from "lucide-react";
 import { cn } from "@/shared/lib/utils";
 
-export function SuroHeader() {
+export function SuroHeader({ time }: { time: string }) {
   return (
     <div
       className={cn(
@@ -17,7 +17,7 @@ export function SuroHeader() {
         )}
       >
         <Trophy className="w-8 h-8 md:w-9 md:h-9 text-yellow-400" />
-        수로 랭킹 대시보드
+        수로 랭킹 대시보드 (현재 서버시간 : {time})
       </h1>
       <p className="text-gray-300 text-sm md:text-base">
         실시간 길드 순위와 점수 변화를 확인하세요

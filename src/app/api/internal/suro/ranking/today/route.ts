@@ -4,8 +4,6 @@ import { type NextRequest, NextResponse } from "next/server";
 import { getRankingGuild } from "@/services/maple/guild/api";
 import { EVE_WORLD_NAME } from "@/shared/lib/consts";
 
-export const revalidate = 60 * 60; // 1시간(60분) 캐싱
-
 export async function GET(request: NextRequest) {
   const today = dayjs();
   const isFriday = today.day() === 5;

@@ -27,7 +27,11 @@ export const getSuroRankingToday = async ({
 }) => {
   const response = await internalApiClient().get<SuroRankingToday>(
     "/suro/ranking/today",
-    {},
+    {
+      next: {
+        revalidate: 60 * 60,
+      },
+    },
     headers,
   );
   return response.data;
